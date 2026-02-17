@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git submodule add:*)",
+      "Bash(git submodule update:*)",
+      "Bash(chmod:*)",
+      "Bash(/home/gypsy/dev/openclaw-voice/ai-best-practices/scripts/install-ai-best-practices.sh:*)"
+    ]
+  }
+}
