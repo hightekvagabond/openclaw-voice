@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "OpenClaw Voice",
+    "slug": "openclaw-voice",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "backgroundColor": "#1a1a2e"
+    },
+    "android": {
+      "package": "com.openclaw.voice",
+      "adaptiveIcon": {
+        "backgroundColor": "#1a1a2e"
+      },
+      "permissions": [
+        "RECORD_AUDIO",
+        "INTERNET",
+        "FOREGROUND_SERVICE",
+        "WAKE_LOCK"
+      ]
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-av",
+        {
+          "microphonePermission": "OpenClaw Voice needs microphone access for voice conversations."
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+node_modules/
+.expo/
+dist/
+android/app/build/
+*.apk
+*.aab
+*.jks
+*.keystore
+.env
+.env.local
