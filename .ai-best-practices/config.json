@@ -1,0 +1,17 @@
+{
+  "project": {
+    "name": "openclaw-voice",
+    "type": "mobile",
+    "description": "",
+    "structure": "single"
+  },
+  "app": {
+    "type": ""
+  },
+  "components": {},
+  "ai_best_practices": {
+    "devcontainer_managed": true,
+    "schema_version": "2.0",
+    "multi_component_support": true
+  }
+}

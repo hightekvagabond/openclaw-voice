@@ -8,3 +8,6 @@ android/app/build/
 *.keystore
 .env
 .env.local
+.devcontainer/devcontainer.json
+.devcontainer/Dockerfile
+.dev-prefs/

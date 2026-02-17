@@ -1,0 +1,16 @@
+{
+  "name": "Recovery Container - Docker Cache Auto-Cleanup",
+  "build": {
+    "dockerfile": "Dockerfile.recovery",
+    "args": {
+      "BUILDTIME": "${localEnv:USER}-${localEnv:HOSTNAME}-$(date +%Y%m%d_%H%M%S)-recovery"
+    }
+  },
+  "remoteUser": "vscode",
+  "initializeCommand": "echo '🧹 Recovery Mode: Cleaning Docker cache to prevent build issues...' && docker system prune -f --volumes && echo '✅ Docker cache cleared - proceeding with recovery build'",
+  "postCreateCommand": "echo '🚀 Recovery Container Ready!' && echo '📍 Location:' && pwd && echo '👤 User:' && whoami && echo '📂 Contents:' && ls -la && echo '🧹 Docker cache was auto-cleaned on startup' && echo '💡 If devcontainer issues persist, run: cleanup-docker-cache'",
+  "workspaceFolder": "/workspaces",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspaces,type=bind,consistency=cached"
+  ]
+}

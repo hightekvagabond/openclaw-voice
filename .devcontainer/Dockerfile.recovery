@@ -1,0 +1,45 @@
+FROM python:3.11-slim
+
+# Build argument to force cache invalidation
+ARG BUILDTIME
+ENV BUILDTIME=${BUILDTIME}
+
+# Install essential tools including git and session-init dependencies
+# CRITICAL: procps contains sleep, ps, pgrep - required for VS Code devcontainer
+# CRITICAL: psmisc contains killall, pstree - useful for process management
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        bash \
+        git \
+        curl \
+        sudo \
+        jq \
+        ca-certificates \
+        vim \
+        less \
+        findutils \
+        coreutils \
+        procps \
+        psmisc && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user (vscode) with sudo
+RUN useradd -m vscode && echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Add Docker cache cleanup script for recovery scenarios
+RUN echo '#!/bin/bash' > /usr/local/bin/cleanup-docker-cache && \
+    echo '# Recovery script to clean Docker devcontainer cache' >> /usr/local/bin/cleanup-docker-cache && \
+    echo 'echo "🧹 Cleaning Docker devcontainer cache..."' >> /usr/local/bin/cleanup-docker-cache && \
+    echo 'PROJECT_DIR=$(pwd)' >> /usr/local/bin/cleanup-docker-cache && \
+    echo 'PROJECT_NAME=$(basename "$PROJECT_DIR")' >> /usr/local/bin/cleanup-docker-cache && \
+    echo 'docker stop $(docker ps -q --filter "label=devcontainer.local_folder=$PROJECT_DIR") 2>/dev/null || true' >> /usr/local/bin/cleanup-docker-cache && \
+    echo 'docker rm $(docker ps -aq --filter "label=devcontainer.local_folder=$PROJECT_DIR") 2>/dev/null || true' >> /usr/local/bin/cleanup-docker-cache && \
+    echo 'docker images | grep "vsc-$PROJECT_NAME" | awk '"'"'{print $3}'"'"' | xargs -r docker rmi -f' >> /usr/local/bin/cleanup-docker-cache && \
+    echo 'echo "✅ Docker cache cleaned for project: $PROJECT_NAME"' >> /usr/local/bin/cleanup-docker-cache && \
+    chmod +x /usr/local/bin/cleanup-docker-cache
+
+USER vscode
+WORKDIR /workspace
+
+# Display build info for debugging
+RUN echo "Container built at: ${BUILDTIME}" > /tmp/build-info.txt

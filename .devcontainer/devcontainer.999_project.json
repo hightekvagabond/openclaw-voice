@@ -1,0 +1,5 @@
+{
+  "_layerInfo_999_project": "Final layer for project-specific settings. Overrides all previous layers.",
+  "_comment": "Project-specific devcontainer customizations go here. This file is never overwritten by best practices updates.",
+  "_example": "\"postCreateCommand\": \"npm install && npm run setup\""
+} 

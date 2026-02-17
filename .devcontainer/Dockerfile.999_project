@@ -1,0 +1,4 @@
+# Layer_999_project: Final Dockerfile layer for project-specific customizations
+# This content is appended after 010_basic and 020_local layers in the modular merge system
+# Project-specific Dockerfile customizations go here.
+# This file is never overwritten by best practices updates. 
